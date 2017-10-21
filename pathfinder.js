@@ -7,7 +7,7 @@ var PF = require('pathfinding');
 /* Create a path array from a map mask
  * Return the next move
  *
- * @param start 
+ * @param start
  * @param goal
  * @param mapMask. matrix of 1s and 0s (convert with createMapMask())
  */
@@ -15,6 +15,7 @@ exports.getNextMove = function(start, goal, mapMask) {
 	var grid = new PF.Grid(mapMask);
 	var finder = new PF.AStarFinder();
 	var path = finder.findPath(start.x, start.y, goal.x, goal.y, grid);
+	// console.log(path);
 	if (path[1]) {
 		var dx = path[1][0] - start.x;
 		var dy = path[1][1] - start.y;
@@ -34,7 +35,7 @@ exports.createMapMask = function(map) {
 	var mapMask = createArray(100,100);
 	for (var x = 0; x < map.length; x++) {
 		for (var y = 0; y < map[x].length; y++) {
-			if (map[x][y]) {
+			if (!map[x][y].isNull) {
 				mapMask[x][y] = map[x][y].blocked ? 1 : 0;
 			} else {
 				mapMask[x][y] = 0;

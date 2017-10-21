@@ -4,13 +4,13 @@ var Unit = require("./Unit");
 var Worker = require("./Worker");
 var Scout = require("./Scout");
 
-let ip = process.argv.length > 2 ? process.argv[2] : '127.0.0.1';
+let ip = process.argv.length > 2 ? process.argv[2] : '0.0.0.0';
 let port = process.argv.length > 3 ? process.argv[3] : '8080';
 
 let map = [];
 
 for (var i = 0; i<100; i++) {
-  map[i] = new Array(100).fill({visible: false, TTL: 0});
+  map[i] = new Array(100).fill({isNull: true, visible: false, TTL: 0});
 }
 
 
@@ -43,6 +43,7 @@ function updateMap(dataUpdates) {
     tile = dataUpdates.tile_updates[key];
     transpose(tile);
     tile.TTL = 0;
+    tile.isNull=false;
 
     map[tile.x][tile.y] = tile;
     // console.log("Updated tile " + tile.x + ", " + tile.y);
