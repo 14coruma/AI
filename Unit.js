@@ -46,7 +46,7 @@ class Unit {
   }
 
 
-  getMove() {
+  getMove(map) {
     // Override with method to return the next move
   }
 
