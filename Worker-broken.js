@@ -19,48 +19,46 @@ class Worker extends Unit {
 		var mapMask = pathfinder.createMapMask(map);
 
 		this.start = { x: this.x, y: this.y };
-// 		switch(this.strat) {
-// 			case "MOVE_RESOURCE":
-// 				var resourceDir = canGather(this.start, this.dest, map);
-// 				if (resourceDir) { // If you can gather, then gather!
-// 					this.strat = "GATHER";
-// 					this.moveDir = resourceDir;
-// 				} else {
-// 					// Keep moving towards resource
-// 					this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
-// 				}
-// 				break;
-// 
-// 			case "GATHER":
-// 				// We just gathered, so move to base
-// 				this.strat = "MOVE_BASE";
-// 				this.dest = { x: 50, y: 50 };
-// 				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
-// 				break;
-// 
-// 			case "MOVE_BASE":
-// 					this.strat = "MOVE_RESOURCE";
-// 					this.dest = closestResource(this.start, map, mapMask);
-// //				if (this.start.x == 50 && this.start.y == 50) { // We made it to base, so move to next resource
-// //					this.dest = closestResource(this.start, map, mapMask);
-// //					this.strat = "MOVE_RESOURCE";
-// //				}
-// 				// Make next move (to resource or base)
-// 				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
-// 				break;
-// 
-// 			default:
-// 				this.dest = { x: this.x, y: this.y }; // Don't do anything if no job
-// 				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
-// 		}
+		switch(this.strat) {
+			case "MOVE_RESOURCE":
+				var resourceDir = canGather(this.start, this.dest, map);
+				if (resourceDir) { // If you can gather, then gather!
+					this.strat = "GATHER";
+					this.moveDir = resourceDir;
+				} else {
+					// Keep moving towards resource
+					this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
+				}
+				break;
+
+			case "GATHER":
+				// We just gathered, so move to base
+				this.strat = "MOVE_BASE";
+				this.dest = { x: 50, y: 50 };
+				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
+				break;
+
+			case "MOVE_BASE":
+					this.strat = "MOVE_RESOURCE";
+					this.dest = closestResource(this.start, map, mapMask);
+//				if (this.start.x == 50 && this.start.y == 50) { // We made it to base, so move to next resource
+//					this.dest = closestResource(this.start, map, mapMask);
+//					this.strat = "MOVE_RESOURCE";
+//				}
+				// Make next move (to resource or base)
+				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
+				break;
+
+			default:
+				this.dest = { x: this.x, y: this.y }; // Don't do anything if no job
+				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
+		}
 
 		// return the array with the move
-		this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
 		var move = "MOVE"
 		if (this.strat == "GATHER")
 			move = "GATHER";
 		console.log("STRAT: " + this.strat + " DIR: " + this.moveDir + " TOWARDS: x=" + this.dest.x + ", y=" + this.dest.y);
-		console.log("MY x=" + this.x + " MY y=" + this.y);
 		return { command: move, unit: this.id, dir: this.moveDir };
 	}
 
