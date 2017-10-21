@@ -61,10 +61,29 @@ function generateCommands(units, map) {
   var result = [];
 
   for (var key in units) {
-    result.push({
-      command:"MOVE",
-      dir: ['N','E','S','W'][Math.floor(Math.random() * 4)], unit: parseInt(key)
-    });
+    unit = units[key];
+
+    switch (unit.type) {
+      case "worker":
+        workerMove(unit);
+        break;
+      case "scout":
+        scoutMove(unit);
+        break;
+      case "tank":
+        tankMove(unit);
+        break;
+      default:
+        console.log("you done screwed up big time!");
+
+    }
+
+
+
+    // result.push({
+    //   command:"MOVE",
+    //   dir: ['N','E','S','W'][Math.floor(Math.random() * 4)], unit: parseInt(key)
+    // });
   }
 
   // console.log(result);
