@@ -1,12 +1,20 @@
 const NodeClient = require('./node-client');
 
+// var Unit = require("./Unit");
+var Worker = require("./Worker");
+
 let ip = process.argv.length > 2 ? process.argv[2] : '127.0.0.1';
 let port = process.argv.length > 3 ? process.argv[3] : '8080';
 
 let map = [];
+
 for (var i = 0; i<101; i++) {
   map[i] = new Array(100).fill(null);
 }
+
+
+let mapUnits = [];
+
 
 function transpose(unit) {
   unit.x += 50;
@@ -16,7 +24,6 @@ function transpose(unit) {
 
 console.log(map);
 
-let mapUnits = [];
 
 let client = new NodeClient(ip, port, dataUpdates => {
   updateMap(dataUpdates, map);
@@ -43,13 +50,33 @@ function updateMap(dataUpdates) {
 function updateUnits(dataUpdates) {
 
   for (var key in dataUpdates.unit_updates) {
-    unit = dataUpdates.unit_updates[key];
+    unit_update = dataUpdates.unit_updates[key];
 
-    mapUnits[unit.id] = unit;
+    // Update unit if it exists, otherwise create a new one
+    // TODO: delete dead units?
+    if (mapUnits[unit_update.id]) {
+      mapUnits[unit_update.id].update(unit_update);
+    }
+    else {
+
+      switch (unit_update.type) {
+        case "worker":
+          mapUnits[unit_update.id] = new Worker(unit_update);
+          break;
+        case "scout":
+          mapUnits[unit_update.id] = new Scout(unit_update);
+          break;
+        case "tank":
+          mapUnits[unit_update.id] = new Tank(unit_update);
+          break;
+        default:
+          console.log("you done screwed up big time!");
+
+      }
+
+      mapUnits[unit_update.id] = new Unit(unit_update);
+    }
   }
-
-
-
 
   // // Update your units based on data updates
   // // Currently this code just maintains an array of your unit's ids
