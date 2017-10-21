@@ -23,7 +23,8 @@ function transpose(unit) {
   return unit;
 }
 
-//console.log(map);
+
+// console.log(map);
 
 
 let client = new NodeClient(ip, port, dataUpdates => {
@@ -44,7 +45,7 @@ function updateMap(dataUpdates) {
     tile.TTL = 0;
 
     map[tile.x][tile.y] = tile;
-    //console.log("Updated tile " + tile.x + ", " + tile.y);
+    // console.log("Updated tile " + tile.x + ", " + tile.y);
   }
 
   // Loop through the map and set the time since update back
@@ -56,6 +57,8 @@ function updateMap(dataUpdates) {
       }
     }
   }
+
+  // console.log(map);
 }
 
 function updateUnits(dataUpdates) {
