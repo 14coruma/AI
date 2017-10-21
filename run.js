@@ -23,6 +23,7 @@ function transpose(unit) {
   return unit;
 }
 
+
 // console.log(map);
 
 
@@ -138,7 +139,7 @@ function generateCommands() {
     //   dir: ['N','E','S','W'][Math.floor(Math.random() * 4)], unit: parseInt(key)
     // });
   }
-
-  console.log(result);
+//
+  //console.log(result);
   return result;
 }
