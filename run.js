@@ -10,7 +10,7 @@ let port = process.argv.length > 3 ? process.argv[3] : '8080';
 let map = [];
 
 for (var i = 0; i<100; i++) {
-  map[i] = new Array(100).fill({visible: "false", TTL: 0});
+  map[i] = new Array(100).fill({visible: false, TTL: 0});
 }
 
 
@@ -56,8 +56,6 @@ function updateMap(dataUpdates) {
       }
     }
   }
-
-  console.log(map[49][49]);
 }
 
 function updateUnits(dataUpdates) {

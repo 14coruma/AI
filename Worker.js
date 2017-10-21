@@ -52,7 +52,7 @@ class Worker extends Unit {
 		}
 
 		// return the array with the move
-		return { command: this.strat, unit: this.id, dir: this.moveDir };
+		return { command: "MOVE", unit: this.id, dir: this.moveDir };
 	}
 
 }
