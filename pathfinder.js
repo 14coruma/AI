@@ -5,6 +5,7 @@
 var PF = require('pathfinding');
 
 /* Create a path array from a map mask
+ * Return the next move
  *
  * @param start 
  * @param goal
@@ -14,7 +15,15 @@ exports.getNextMove = function(start, goal, mapMask) {
 	var grid = new PF.Grid(mapMask);
 	var finder = new PF.AStarFinder();
 	var path = finder.findPath(start.x, start.y, goal.x, goal.y, grid);
-	return path[1];
+	var dx = path[1][0] - start.x;
+	var dy = path[1][1] - start.y;
+	var move = "";
+	if (dx != 0) {
+		move = (dx == 1) ? "E" : "W";
+	} else {
+		move = (dy == 1) ? "S" : "N";
+	}
+	return move;
 }
 
 /* Create a mapMask from a map
