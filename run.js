@@ -23,7 +23,7 @@ function transpose(unit) {
   return unit;
 }
 
-console.log(map);
+//console.log(map);
 
 
 let client = new NodeClient(ip, port, dataUpdates => {
@@ -44,7 +44,7 @@ function updateMap(dataUpdates) {
     tile.TTL = 0;
 
     map[tile.x][tile.y] = tile;
-    console.log("Updated tile " + tile.x + ", " + tile.y);
+    //console.log("Updated tile " + tile.x + ", " + tile.y);
   }
 
   // Loop through the map and set the time since update back
@@ -57,7 +57,7 @@ function updateMap(dataUpdates) {
     }
   }
 
-  console.log(map[49][49]);
+  //console.log(map[49][49]);
 }
 
 function updateUnits(dataUpdates) {
@@ -138,7 +138,7 @@ function generateCommands() {
     //   dir: ['N','E','S','W'][Math.floor(Math.random() * 4)], unit: parseInt(key)
     // });
   }
-
-  console.log(result);
+//
+  //console.log(result);
   return result;
 }
