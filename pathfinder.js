@@ -42,6 +42,15 @@ exports.createMapMask = function(map) {
 	return mapMask;
 }
 
+/* Find the distance to dest from start
+ */
+exports.distance = function(start, goal, mapMask) {
+	var grid = new PF.Grid(mapMask);
+	var finder = new PF.AStarFinder();
+	var path = finder.findPath(start.x, start.y, goal.x, goal.y, grid);
+	return path.length - 1;
+}
+
 /* Create an array with zeros
  */
 function createArray(length) {
