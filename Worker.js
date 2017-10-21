@@ -21,27 +21,28 @@ class Worker extends Unit {
 		switch(this.strat) {
 			case "MOVE_RESOURCE":
 				var resourceDir = canGather(this.start, this.dest, map);
-				if (resourceDir) {
+				if (resourceDir) { // If you can gather, then gather!
 					this.strat = "GATHER";
 					this.moveDir = resourceDir;
 				} else {
+					// Keep moving towards resource
 					this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
 				}
 				break;
 
 			case "GATHER":
-				if (this.resource) {
-					this.strat = "MOVE_BASE";
-					this.dest = { x: 0, y: 0 };
-					this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
-				}
+				// We just gathered, so move to base
+				this.strat = "MOVE_BASE";
+				this.dest = { x: 0, y: 0 };
+				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
 				break;
 
 			case "MOVE_BASE":
-				if (this.dest === this.start) {
+				if (this.start === this.dest) { // We made it to base, so move to next resource
 					this.dest = closestResource(this.start, map, mapMask);
 					this.strat = "MOVE_RESOURCE";
 				}
+				// Make next move (to resource or base)
 				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
 				break;
 
@@ -49,8 +50,6 @@ class Worker extends Unit {
 				this.dest = { x: this.x, y: this.y }; // Don't do anything if no job
 				this.moveDir = pathfinder.getNextMove( this.start, this.dest, mapMask);
 		}
-
-		// calculate next move
 
 		// return the array with the move
 		return { command: this.strat, unit: this.id, dir: this.moveDir };
